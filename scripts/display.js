@@ -1,10 +1,10 @@
 class Display{
     constructor(){
         this.simon = new Game()
-        this.simon.createNewSequence(4)
         this.buttons = Array.from(document.getElementsByClassName("square"))
         this.quit = document.getElementById("exit")
         this.playButton = document.getElementById("play")
+        //=========
         this.isSequenceBeingPlayed=false
         this.attachEvents()
 
@@ -47,6 +47,7 @@ class Display{
             console.log("==> Error : the sequence can be played only one time")
             return
         }
+        this.simon.createNewSequence()
         this.simon.alternateReadWriteMode()
         this.isSequenceBeingPlayed=true
         let indexToPlay=0

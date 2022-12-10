@@ -1,14 +1,15 @@
 class Game{
     constructor(){
-        this.length=3
+        this.sequenceLength=4
         this.sequence=[]
         this.userSequence=[]
+        //==========
         this.userNeedsToEnterTheSequence=false
         this.points=0
     }
-    createNewSequence = (ln) =>{
+    createNewSequence = () =>{
         const array = []
-        for(let i=0 ; i<ln ; i++){
+        for(let i=0 ; i<this.sequenceLength ; i++){
             array.push(Math.floor(Math.random()*4))
         }
         this.sequence = array
@@ -24,6 +25,8 @@ class Game{
             if(this.isSequenceAndUserSequenceEqual()){
                 this.points+=1
             }
+            this.sequence=[]
+            this.userSequence=[]
             this.userNeedsToEnterTheSequence=false
         }
     }
@@ -31,6 +34,7 @@ class Game{
         return this.userNeedsToEnterTheSequence
     }
     alternateReadWriteMode(){
+        console.log("alternate")
         this.userNeedsToEnterTheSequence =! this.userNeedsToEnterTheSequence
     }
     isSequenceAndUserSequenceEqual(){
@@ -42,5 +46,4 @@ class Game{
         })
         return isEqual
     }
-
 }
