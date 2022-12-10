@@ -3,7 +3,9 @@ class Display{
         this.simon = new Game()
         this.buttons = Array.from(document.getElementsByClassName("square"))
         this.quit = document.getElementById("exit")
+        this.points = document.getElementById("points")
         this.playButton = document.getElementById("play")
+        this.indicator = document.getElementById("indicator")
         //=========
         this.isSequenceBeingPlayed=false
         this.attachEvents()
@@ -27,9 +29,11 @@ class Display{
             console.log("====")
             button.addEventListener('click',e=>{
                 if(!this.isSequenceBeingPlayed){
+                    this.turnColorOnWithIndex(i)
                     this.simon.addNewValueToTheUserSequence(i)
                     console.log("button : ",i, this.isSequenceBeingPlayed)
                 }
+                this.updatePoints()
             })
         })
         this.quit.addEventListener("click",()=>{
@@ -50,20 +54,17 @@ class Display{
         this.simon.createNewSequence()
         this.simon.alternateReadWriteMode()
         this.isSequenceBeingPlayed=true
+        this.updateIndicator()
         let indexToPlay=0
         console.log("sequence : ", this.simon.sequence)
         const id = setInterval(()=>{
             if( indexToPlay < this.simon.sequence.length ){
                 console.log(`index : ${indexToPlay}, ${ this.simon.sequence[indexToPlay] }`)
                 this.turnColorOnWithIndex( this.simon.sequence[indexToPlay] )
-                setTimeout( ()=>{
-                    // console.log( "off", indexToPlay, this.colorOff[indexToPlay] )
-                    // this.turnColorOffWithIndex(this.simon.sequence[indexToPlay])
-                    this.turnEveryColorsOff()
-                },200)
             }else{
                 clearInterval(id)
                 this.isSequenceBeingPlayed=false
+                this.updateIndicator()
                 console.log(this.colorOn)
                 console.log(this.colorOff)
             }
@@ -76,10 +77,15 @@ class Display{
             this.buttons[code].classList.add("shine")
         }, 1000)
     }
+
     turnColorOnWithIndex(colorIndex){
         console.log("==> on , index : ",this.simon.sequence[colorIndex], getComputedStyle(this.buttons[colorIndex]).backgroundColor)
         this.buttons[colorIndex].style.backgroundColor=this.colorOn[colorIndex]
+        setTimeout( ()=>{
+            this.buttons[colorIndex].style.backgroundColor=this.colorOff[colorIndex]
+        },200)
     }
+
     // turnColorOffWithIndex(colorIndex){
     //     console.log("==> off, index : ",this.simon.sequence[colorIndex], getComputedStyle(this.buttons[colorIndex]).backgroundColor)
     //     this.buttons[colorIndex].style.backgroundColor=this.colorOff[colorIndex]
@@ -90,6 +96,17 @@ class Display{
             button.style.backgroundColor=this.colorOff[i]
         })
     }
+    updatePoints(){
+        this.points.innerText =this.simon.points
+    }
+    updateIndicator(){
+        if(this.isSequenceBeingPlayed){
+            this.indicator.innerText="READ"
+        }else{
+            this.indicator.innerText="ENTER"
+        }
+    }
+
 }
 
 

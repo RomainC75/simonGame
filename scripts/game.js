@@ -22,9 +22,9 @@ class Game{
         console.log("new sequence : ",this.userSequence)
         if(this.userSequence.length === this.sequence.length){
             console.log("isSequenceAndUserSequenceEqual",this.isSequenceAndUserSequenceEqual())
-            if(this.isSequenceAndUserSequenceEqual()){
-                this.points+=1
-            }
+            // if(this.isSequenceAndUserSequenceEqual()){
+            //     this.points+=1
+            // }
             this.sequence=[]
             this.userSequence=[]
             this.userNeedsToEnterTheSequence=false
@@ -44,6 +44,15 @@ class Game{
                 isEqual = false
             }
         })
+        if(isEqual){
+            this.addpoint()
+        }
         return isEqual
+    }
+    addpoint(){
+        this.points+=1
+    }
+    resetPoints(){
+        this.points=0
     }
 }
