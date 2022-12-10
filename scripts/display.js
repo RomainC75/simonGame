@@ -2,11 +2,10 @@ class Display{
     constructor(){
         this.simon = new Game()
         this.simon.createNewSequence(4)
-
         this.buttons = Array.from(document.getElementsByClassName("square"))
         this.quit = document.getElementById("exit")
         this.playButton = document.getElementById("play")
-
+        this.isSequenceBeingPlayed=false
         this.attachEvents()
 
         this.colorOn=[
@@ -21,15 +20,16 @@ class Display{
             "rgba(255, 0, 0, 1)",
             "rgba(0, 128, 0, 1)"
         ]
-
     }
     attachEvents(){
         console.log(this.buttons)
         this.buttons.forEach( (button, i)=>{
             console.log("====")
             button.addEventListener('click',e=>{
-                this.simon.addNewValueToTheUserSequence(i)
-                console.log("button : ",i)
+                if(!this.isSequenceBeingPlayed){
+                    this.simon.addNewValueToTheUserSequence(i)
+                    console.log("button : ",i, this.isSequenceBeingPlayed)
+                }
             })
         })
         this.quit.addEventListener("click",()=>{
@@ -42,26 +42,31 @@ class Display{
     stopGame(){
         console.log("stoping..")
     }
-
-
     playSequence(){
+        if(this.simon.getUserNeedsToEnterTheSequence()){
+            console.log("==> Error : the sequence can be played only one time")
+            return
+        }
+        this.simon.alternateReadWriteMode()
+        this.isSequenceBeingPlayed=true
         let indexToPlay=0
-            console.log("sequence : ", this.simon.sequence)
-            const id = setInterval(()=>{
-                if( indexToPlay < this.simon.sequence.length ){
-                    console.log(`index : ${indexToPlay}, ${this.simon.sequence[indexToPlay] }`)
-                    this.turnColorOnWithIndex( this.simon.sequence[indexToPlay] )
-                    setTimeout( ()=>{
-                        // console.log( "off", indexToPlay, this.colorOff[indexToPlay] )
-                        // this.turnColorOffWithIndex(this.simon.sequence[indexToPlay])
-                        this.turnEveryColorsOff()
-                    },200)
-                }else{
-                    clearInterval(id)
-                    console.log(this.colorOn)
-                    console.log(this.colorOff)
-                }
-                indexToPlay++
+        console.log("sequence : ", this.simon.sequence)
+        const id = setInterval(()=>{
+            if( indexToPlay < this.simon.sequence.length ){
+                console.log(`index : ${indexToPlay}, ${ this.simon.sequence[indexToPlay] }`)
+                this.turnColorOnWithIndex( this.simon.sequence[indexToPlay] )
+                setTimeout( ()=>{
+                    // console.log( "off", indexToPlay, this.colorOff[indexToPlay] )
+                    // this.turnColorOffWithIndex(this.simon.sequence[indexToPlay])
+                    this.turnEveryColorsOff()
+                },200)
+            }else{
+                clearInterval(id)
+                this.isSequenceBeingPlayed=false
+                console.log(this.colorOn)
+                console.log(this.colorOff)
+            }
+            indexToPlay++
             },1000)
     }
     setDelay(code){
@@ -74,11 +79,11 @@ class Display{
         console.log("==> on , index : ",this.simon.sequence[colorIndex], getComputedStyle(this.buttons[colorIndex]).backgroundColor)
         this.buttons[colorIndex].style.backgroundColor=this.colorOn[colorIndex]
     }
-    turnColorOffWithIndex(colorIndex){
-        console.log("==> off, index : ",this.simon.sequence[colorIndex], getComputedStyle(this.buttons[colorIndex]).backgroundColor)
-        this.buttons[colorIndex].style.backgroundColor=this.colorOff[colorIndex]
+    // turnColorOffWithIndex(colorIndex){
+    //     console.log("==> off, index : ",this.simon.sequence[colorIndex], getComputedStyle(this.buttons[colorIndex]).backgroundColor)
+    //     this.buttons[colorIndex].style.backgroundColor=this.colorOff[colorIndex]
         
-    }
+    // }
     turnEveryColorsOff(){
         this.buttons.forEach((button,i)=>{
             button.style.backgroundColor=this.colorOff[i]
@@ -86,29 +91,5 @@ class Display{
     }
 }
 
-
-
-class Game{
-    constructor(){
-        this.length=3
-        this.sequence=[]
-        this.userSequence=[]
-    }
-
-    createNewSequence = (ln) =>{
-        const array = []
-        for(let i=0 ; i<ln ; i++){
-            array.push(Math.floor(Math.random()*4))
-        }
-        this.sequence = array
-    }
-
-    addNewValueToTheUserSequence(i){
-        this.userSequence.push(i)
-        console.log(this.userSequence)
-    }
-}
-
-const display = new Display()
 
 
