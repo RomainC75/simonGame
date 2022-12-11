@@ -2,7 +2,7 @@ class Display{
     constructor(){
         this.simon = new Game()
         this.buttons = Array.from(document.getElementsByClassName("square"))
-        this.quit = document.getElementById("exit")
+        this.resetButton = document.getElementById("reset")
         this.points = document.getElementById("points")
         this.playButton = document.getElementById("play")
         this.indicator = document.getElementById("indicator")
@@ -37,14 +37,14 @@ class Display{
                 this.updatePoints()
             })
         })
-        this.quit.addEventListener("click",()=>{
+        this.resetButton.addEventListener("click",()=>{
             stopGame()
         })
         this.playButton.addEventListener("click",()=>{
             this.playSequence()
         })
     }
-    stopGame(){
+    resetGame(){
         console.log("stoping..")
     }
     playSequence(){
@@ -98,14 +98,22 @@ class Display{
         const textPlace = this.indicator.querySelector("p")
         if(this.isSequenceBeingPlayed){
             textPlace.innerText="READ"
-            this.indicator.style.backgroundColor="orange"
+            this.removeIndicatorClasses()
+            this.indicator.classList.add("readIndicator")
         }else if(this.simon.getUserNeedsToEnterTheSequence()){
             textPlace.innerText="ENTER"
-            this.indicator.style.backgroundColor="red"
+            this.removeIndicatorClasses()
+            this.indicator.classList.add("enterIndicator")
         }else{
             textPlace.innerText="waiting"
-            this.indicator.style.backgroundColor="white"
+            this.removeIndicatorClasses()
+            this.indicator.classList.add("waitingIndicator")
         }
+    }
+    removeIndicatorClasses(){
+        this.indicator.classList.remove("waitingIndicator")
+        this.indicator.classList.remove("readIndicator")
+        this.indicator.classList.remove("enterIndicator")
     }
 }
 
