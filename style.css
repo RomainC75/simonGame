@@ -5,6 +5,14 @@
     font-family: 'Electrolize', sans-serif;
 }
 
+html, body{
+    height: 100%;
+}
+
+body{
+    background:linear-gradient(45deg, rgb(255, 255, 255), rgb(226, 224, 224));
+}
+
 h1{
     text-align: center;
     position: relative;
@@ -25,25 +33,36 @@ h1{
     height:200px;
 }
 
+#play, #sequenceLength{
+    position:absolute;
+    z-index:5;
+    left:50%;
+    font-size: 1.6em;
+    
+}
+
 #play{
     width:140px;
     height:140px;
-    position:absolute;
     background:black;
     top:50%;
-    left:50%;
     transform:translate(-50%,-50%) ;
     border-radius:50%;
-    z-index:5;
     color:white;
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 1.6em;
     cursor: pointer;
 }
 
-#play > div{
+#sequenceLength{
+    top:60%;
+    transform:translate(-50%,-50%) ;
+    color:white;
+    pointer-events: none; 
+}
+
+#play > div, #sequenceLength > div{
     font-family: 'Press Start 2P';
 }
 
@@ -73,8 +92,8 @@ h2{
 
 #circle{
     border:20px solid rgb(0, 0, 0);
-    width:400px;
-    height:400px;
+    width:395px;
+    height:395px;
     position:absolute;
     border-radius: 100%;
     top:50%;
@@ -105,9 +124,7 @@ h2{
 }
 
 #reset{
-    
     background:grey;
-    
 }
 
 .button{
@@ -118,10 +135,18 @@ h2{
     width:300px;
     text-align: center;
     border-radius: 2em;
+    box-shadow: 1px 1px 10px grey;
+}
+.buttons{
+    display: flex;
+    justify-content: space-around;
+    width:80%;
+    margin:0 auto;
 }
 
 .waitingIndicator{
     background-color: white;
+    border: 1px solid black;
 }
 
 .readIndicator{
@@ -133,5 +158,11 @@ h2{
 .enterIndicator{
     background-color: orange;
     font-weight: 800;
+}
 
+
+@media (max-width:500px) {
+    .buttons{
+        flex-direction: column;
+    }
 }

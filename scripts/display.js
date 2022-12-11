@@ -6,9 +6,10 @@ class Display{
         this.points = document.getElementById("points")
         this.playButton = document.getElementById("play")
         this.indicator = document.getElementById("indicator")
-        //=========
-        this.isSequenceBeingPlayed=false
+        this.sequenceLengthCounter = document.querySelector("#sequenceLength > div")
+        this.isSequenceBeingPlayed = false
         this.attachEvents()
+
 
         this.colorOn=[
             "rgba(255, 218, 0, 0.5)",
@@ -35,10 +36,11 @@ class Display{
                 }
                 this.updateIndicator()
                 this.updatePoints()
+                this.updateSequenceLengthCounter()
             })
         })
         this.resetButton.addEventListener("click",()=>{
-            stopGame()
+            this.resetGame()
         })
         this.playButton.addEventListener("click",()=>{
             this.playSequence()
@@ -93,6 +95,10 @@ class Display{
     updatePoints(){
         this.points.innerText =this.simon.points
     }
+    resetGame(){
+        this.simon.resetPoints()
+        this.updatePoints()   
+    }
     updateIndicator(){
         console.log('==> Update indicator')
         const textPlace = this.indicator.querySelector("p")
@@ -115,7 +121,16 @@ class Display{
         this.indicator.classList.remove("readIndicator")
         this.indicator.classList.remove("enterIndicator")
     }
+
+    updateSequenceLengthCounter(){
+        this.sequenceLengthCounter.innerText = this.simon.userSequence.length
+    }
+
+    showIfAnswerIsCorrectOrNot(){
+
+    }
 }
 
-
+//animation when sequence is fully entered
+//reset button
 

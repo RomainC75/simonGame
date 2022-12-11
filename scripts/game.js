@@ -3,7 +3,6 @@ class Game{
         this.sequenceLength=4
         this.sequence=[]
         this.userSequence=[]
-        //==========
         this.userNeedsToEnterTheSequence=false
         this.points=0
     }
@@ -22,9 +21,6 @@ class Game{
         console.log("new sequence : ",this.userSequence)
         if(this.userSequence.length === this.sequence.length){
             console.log("isSequenceAndUserSequenceEqual",this.isSequenceAndUserSequenceEqual())
-            // if(this.isSequenceAndUserSequenceEqual()){
-            //     this.points+=1
-            // }
             this.sequence=[]
             this.userSequence=[]
             this.userNeedsToEnterTheSequence=false
