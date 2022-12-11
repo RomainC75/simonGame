@@ -8,8 +8,8 @@ class Display{
         this.indicator = document.getElementById("indicator")
         this.sequenceLengthCounter = document.querySelector("#sequenceLength > div")
         this.isSequenceBeingPlayed = false
+        this.simonContainer = document.querySelector(".container")
         this.attachEvents()
-
 
         this.colorOn=[
             "rgba(255, 218, 0, 0.5)",
@@ -33,6 +33,17 @@ class Display{
                     this.turnColorOnWithIndex(i)
                     this.simon.addNewValueToTheUserSequence(i)
                     console.log("button : ",i, this.isSequenceBeingPlayed)
+                    if(!this.simon.isTheLastSequenceElementGood()){
+                        //cancel la sequence
+                        // userNeedsToEnterSequence => false
+                        this.simon.alternateReadWriteMode()
+                        // simon.userSequence => []
+                        this.simon.resetUserSequence()
+                        // counter =>0
+                        // automatique avec updateIndicator
+                        console.log("+=====> FALSE ! back tyo the beginning")
+                        this.showSequenceIsFalse()
+                    }
                 }
                 this.updateIndicator()
                 this.updatePoints()
@@ -126,8 +137,11 @@ class Display{
         this.sequenceLengthCounter.innerText = this.simon.userSequence.length
     }
 
-    showIfAnswerIsCorrectOrNot(){
-
+    showSequenceIsFalse(){
+        this.simonContainer.classList.add('badAnswer')
+        setTimeout(()=>{
+            this.simonContainer.classList.remove("badAnswer")
+        },1000)
     }
 }
 

@@ -45,10 +45,17 @@ class Game{
         }
         return isEqual
     }
+    isTheLastSequenceElementGood(){
+        return this.userSequence[this.userSequence.length-1]===this.sequence[this.userSequence.length-1]
+    }
     addpoint(){
         this.points+=1
     }
     resetPoints(){
         this.points=0
     }
+    resetUserSequence(){
+        this.userSequence = []
+    }
+
 }
