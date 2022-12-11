@@ -39,15 +39,12 @@ h1{
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 1.65em;
-    
+    font-size: 1.6em;
 }
 
 #play > div{
     font-family: 'Press Start 2P';
 }
-
-
 
 #button1{
     background-color:rgba(255, 255, 0, 1);
@@ -104,4 +101,20 @@ h2{
 
 .bar4{
     transform: rotate(270deg);
+}
+
+#exit{
+    
+    background:grey;
+    
+}
+
+.button{
+    margin:0 auto;
+    font-weight: 800;
+    font-size:2em;
+    padding:10px;
+    width:300px;
+    text-align: center;
+    border-radius: 2em;
 }

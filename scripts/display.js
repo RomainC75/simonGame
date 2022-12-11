@@ -11,7 +11,7 @@ class Display{
         this.attachEvents()
 
         this.colorOn=[
-            "rgba(255, 255, 0, 0.5)",
+            "rgba(255, 218, 0, 0.5)",
             "rgba(0, 0, 255, 0.5)",
             "rgba(255, 0, 0, 0.5)",
             "rgba(0, 128, 0, 0.5)"
@@ -33,6 +33,7 @@ class Display{
                     this.simon.addNewValueToTheUserSequence(i)
                     console.log("button : ",i, this.isSequenceBeingPlayed)
                 }
+                this.updateIndicator()
                 this.updatePoints()
             })
         })
@@ -77,7 +78,6 @@ class Display{
             this.buttons[code].classList.add("shine")
         }, 1000)
     }
-
     turnColorOnWithIndex(colorIndex){
         console.log("==> on , index : ",this.simon.sequence[colorIndex], getComputedStyle(this.buttons[colorIndex]).backgroundColor)
         this.buttons[colorIndex].style.backgroundColor=this.colorOn[colorIndex]
@@ -85,12 +85,6 @@ class Display{
             this.buttons[colorIndex].style.backgroundColor=this.colorOff[colorIndex]
         },200)
     }
-
-    // turnColorOffWithIndex(colorIndex){
-    //     console.log("==> off, index : ",this.simon.sequence[colorIndex], getComputedStyle(this.buttons[colorIndex]).backgroundColor)
-    //     this.buttons[colorIndex].style.backgroundColor=this.colorOff[colorIndex]
-        
-    // }
     turnEveryColorsOff(){
         this.buttons.forEach((button,i)=>{
             button.style.backgroundColor=this.colorOff[i]
@@ -100,13 +94,19 @@ class Display{
         this.points.innerText =this.simon.points
     }
     updateIndicator(){
+        console.log('==> Update indicator')
+        const textPlace = this.indicator.querySelector("p")
         if(this.isSequenceBeingPlayed){
-            this.indicator.innerText="READ"
+            textPlace.innerText="READ"
+            this.indicator.style.backgroundColor="orange"
+        }else if(this.simon.getUserNeedsToEnterTheSequence()){
+            textPlace.innerText="ENTER"
+            this.indicator.style.backgroundColor="red"
         }else{
-            this.indicator.innerText="ENTER"
+            textPlace.innerText="waiting"
+            this.indicator.style.backgroundColor="white"
         }
     }
-
 }
 
 
