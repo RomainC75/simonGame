@@ -1,3 +1,10 @@
+@import url('https://fonts.googleapis.com/css2?family=Electrolize&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+*{
+    font-family: 'Electrolize', sans-serif;
+}
+
 h1{
     text-align: center;
     position: relative;
@@ -19,16 +26,28 @@ h1{
 }
 
 #play{
-    width:70px;
-    height:70px;
+    width:140px;
+    height:140px;
     position:absolute;
     background:black;
     top:50%;
     left:50%;
-    transform:translate(-50%,-50%) rotate(45deg);
+    transform:translate(-50%,-50%) ;
     border-radius:50%;
-    z-index:5
+    z-index:5;
+    color:white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.65em;
+    
 }
+
+#play > div{
+    font-family: 'Press Start 2P';
+}
+
+
 
 #button1{
     background-color:rgba(255, 255, 0, 1);
