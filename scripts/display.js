@@ -3,14 +3,20 @@ class Display{
         this.simon = new Game()
         this.buttons = Array.from(document.getElementsByClassName("square"))
         this.resetButton = document.getElementById("reset")
-        this.points = document.getElementById("points")
+        
+        this.pointsIndicator = document.getElementById("points")
+        this.levelIndicator = document.getElementById("level")
+        this.sequenceLengthIndicator = document.getElementById("sequenceLengthIndicator")
+
         this.playButton = document.getElementById("play")
         this.indicator = document.getElementById("indicator")
         this.sequenceLengthCounter = document.querySelector("#sequenceLength > div")
         this.isSequenceBeingPlayed = false
         this.simonContainer = document.querySelector(".container")
         this.errorDisk = document.querySelector(".error_disk")
+        
         this.attachEvents()
+        this.updatePoints()
 
         this.colorOn=[
             "rgba(255, 218, 0, 0.5)",
@@ -23,6 +29,13 @@ class Display{
             "rgba(0, 0, 255, 1)",
             "rgba(255, 0, 0, 1)",
             "rgba(0, 128, 0, 1)"
+        ]
+        this.speed=[
+            1000,
+            800,
+            600,
+            500,
+            400,
         ]
     }
     attachEvents(){
@@ -83,14 +96,14 @@ class Display{
                 console.log(this.colorOff)
             }
             indexToPlay++
-            },1000)
+            }, this.speed[this.simon.level] )
     }
-    setDelay(code){
-        setTimeout(()=>{
-            console.log("===>",code)
-            this.buttons[code].classList.add("shine")
-        }, 1000)
-    }
+    // setDelay(code){
+    //     setTimeout(()=>{
+    //         console.log("===>",code)
+    //         this.buttons[code].classList.add("shine")
+    //     }, 1000)
+    // }
     turnColorOnWithIndex(colorIndex){
         console.log("==> on , index : ",this.simon.sequence[colorIndex], getComputedStyle(this.buttons[colorIndex]).backgroundColor)
         this.buttons[colorIndex].style.backgroundColor=this.colorOn[colorIndex]
@@ -104,7 +117,9 @@ class Display{
         })
     }
     updatePoints(){
-        this.points.innerText =this.simon.points
+        this.pointsIndicator.innerText =this.simon.points
+        this.levelIndicator.innerText = this.simon.level+1
+        this.sequenceLengthIndicator.innerText = this.simon.sequenceLength[this.simon.level]
     }
     resetGame(){
         this.simon.resetPoints()

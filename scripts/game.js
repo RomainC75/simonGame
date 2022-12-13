@@ -1,14 +1,15 @@
 class Game{
     constructor(){
-        this.sequenceLength=4
+        this.sequenceLength=[4,5,6,7,8]
         this.sequence=[]
         this.userSequence=[]
         this.userNeedsToEnterTheSequence=false
         this.points=0
+        this.level=0
     }
     createNewSequence = () =>{
         const array = []
-        for(let i=0 ; i<this.sequenceLength ; i++){
+        for(let i=0 ; i<this.sequenceLength[this.level] ; i++){
             array.push(Math.floor(Math.random()*4))
         }
         this.sequence = array
@@ -50,6 +51,10 @@ class Game{
     }
     addpoint(){
         this.points+=1
+        if( this.level<5 && this.points%2==0 ){
+            this.level+=1
+            console.log("level up ! ", this.level)
+        }
     }
     resetPoints(){
         this.points=0
