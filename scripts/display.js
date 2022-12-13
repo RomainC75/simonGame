@@ -9,6 +9,7 @@ class Display{
         this.sequenceLengthCounter = document.querySelector("#sequenceLength > div")
         this.isSequenceBeingPlayed = false
         this.simonContainer = document.querySelector(".container")
+        this.errorDisk = document.querySelector(".error_disk")
         this.attachEvents()
 
         this.colorOn=[
@@ -27,7 +28,6 @@ class Display{
     attachEvents(){
         console.log(this.buttons)
         this.buttons.forEach( (button, i)=>{
-            console.log("====")
             button.addEventListener('click',e=>{
                 if(!this.isSequenceBeingPlayed){
                     this.turnColorOnWithIndex(i)
@@ -94,7 +94,7 @@ class Display{
     turnColorOnWithIndex(colorIndex){
         console.log("==> on , index : ",this.simon.sequence[colorIndex], getComputedStyle(this.buttons[colorIndex]).backgroundColor)
         this.buttons[colorIndex].style.backgroundColor=this.colorOn[colorIndex]
-        setTimeout( ()=>{
+        setTimeout(()=>{
             this.buttons[colorIndex].style.backgroundColor=this.colorOff[colorIndex]
         },200)
     }
@@ -139,10 +139,14 @@ class Display{
 
     showSequenceIsFalse(){
         this.simonContainer.classList.add('badAnswer')
+        this.errorDisk.classList.add('errorDiskAnimation')
         setTimeout(()=>{
             this.simonContainer.classList.remove("badAnswer")
-        },1000)
+            this.errorDisk.classList.remove("errorDiskAnimation")
+        },3000)
     }
+
+    
 }
 
 //animation when sequence is fully entered
