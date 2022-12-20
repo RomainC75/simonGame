@@ -1,3 +1,5 @@
+import {Game} from "./game.js"
+
 class Display{
     constructor(){
         this.simon = new Game()
@@ -19,7 +21,7 @@ class Display{
         this.updatePoints()
 
         this.colorOn=[
-            "rgba(255, 218, 0, 0.5)",
+            "rgba(255, 200, 0, 0.5)",
             "rgba(0, 0, 255, 0.5)",
             "rgba(255, 0, 0, 0.5)",
             "rgba(0, 128, 0, 0.5)"
@@ -39,7 +41,7 @@ class Display{
         ]
     }
     attachEvents(){
-        console.log(this.buttons)
+        console.log("console.log",this.buttons)
         this.buttons.forEach( (button, i)=>{
             button.addEventListener('click',e=>{
                 if(!this.isSequenceBeingPlayed){
@@ -69,12 +71,13 @@ class Display{
         this.playButton.addEventListener("click",()=>{
             this.playSequence()
         })
+        return true
     }
     resetGame(){
         console.log("stoping..")
     }
     playSequence(){
-        if(this.simon.getUserNeedsToEnterTheSequence()){
+        if(this.simon.getIsUserTurn()){
             console.log("==> Error : the sequence can be played only one time")
             return
         }
@@ -122,7 +125,7 @@ class Display{
         this.sequenceLengthIndicator.innerText = this.simon.sequenceLength[this.simon.level]
     }
     resetGame(){
-        this.simon.resetPoints()
+        this.simon.resetPointsAndLevel()
         this.updatePoints()   
     }
     updateIndicator(){
@@ -132,7 +135,7 @@ class Display{
             textPlace.innerText="READ"
             this.removeIndicatorClasses()
             this.indicator.classList.add("readIndicator")
-        }else if(this.simon.getUserNeedsToEnterTheSequence()){
+        }else if(this.simon.getIsUserTurn()){
             textPlace.innerText="ENTER"
             this.removeIndicatorClasses()
             this.indicator.classList.add("enterIndicator")
@@ -167,3 +170,4 @@ class Display{
 //animation when sequence is fully entered
 //reset button
 
+export { Display }
